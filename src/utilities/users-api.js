@@ -1,7 +1,7 @@
 import debug from "debug";
 import sendRequest from "./users-request";
 
-const log = debug("mern:utilities:users-api"); // eslint-disable-line no-unused-vars
+const log = debug("pern:utilities:users-api"); // eslint-disable-line no-unused-vars
 // Add the following import
 const BASE_URL = "/api/users";
 
