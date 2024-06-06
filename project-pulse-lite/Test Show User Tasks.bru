@@ -1,12 +1,12 @@
 meta {
-  name: Test Create User
+  name: Test Show User Tasks
   type: http
-  seq: 2
+  seq: 7
 }
 
-post {
-  url: http://localhost:3000/api/users
-  body: json
+get {
+  url: http://localhost:3000/api/users/Lee/tasks
+  body: none
   auth: none
 }
 

@@ -47,3 +47,12 @@ export const login = async (userData) => {
 export function logOut() {
   localStorage.removeItem("token");
 }
+
+export const listAllProjects = async () => {
+  return await userAPI.listAllProjects();
+}
+
+export const listUserProjects = async (userData) => {
+  log("userName: %o", userData);
+  return await userAPI.listUserProjects(userData);
+}
