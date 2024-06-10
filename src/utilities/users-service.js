@@ -56,3 +56,19 @@ export const listUserProjects = async (userData) => {
   log("userName: %o", userData);
   return await userAPI.listUserProjects(userData);
 }
+
+export const listAllTasks = async () => {
+  return await userAPI.listAllTasks();
+}
+
+export const editSingleTask = async (taskData) => {
+  return await userAPI.editSingleTask(taskData);
+}
+
+export const deleteSingleTask = async (taskId) => {
+  return await userAPI.deleteSingleTask(taskId);
+}
+
+export const createSingleTask = async (taskData) => {
+  return await userAPI.createSingleTask(taskData);
+}

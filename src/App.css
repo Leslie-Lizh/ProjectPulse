@@ -35,3 +35,40 @@ form:invalid button[type="submit"] {
 ::-webkit-scrollbar-track {
   background-color: transparent;
 }
+
+.edit-btn,
+.delete-btn,
+.save-btn,
+.create-btn {
+  margin: 1vmin;
+  padding: 0.6vmin 0.8vmin;
+  color: #ffffff;
+  background-color: #e879f9;
+  font-size: 1.5vmin;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  border: 0.1vmin solid #e7e2dd;
+  border-radius: 0.5vmin;
+  outline: none;
+  cursor: pointer;
+}
+
+.input-box {
+  padding: 1vmin;
+  font-size: 2vmin;
+  border: 0.1vmin solid #e2d9d1;
+  border-radius: 0.5vmin;
+  background-image: none !important; /* prevent lastpass */
+}
+
+.form-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1.25vmin;
+  color: #968c84;
+  padding: 3vmin;
+  background-color: #fbf9f6;
+  border: 0.1vmin solid #e2d9d1;
+  border-radius: 1vmin;
+}

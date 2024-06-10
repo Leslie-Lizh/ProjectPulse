@@ -1,0 +1,17 @@
+meta {
+  name: Test Patch a Task
+  type: http
+  seq: 8
+}
+
+patch {
+  url: http://localhost:3000/api/users/admin/tasks/1
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "task_title": "Build DevOps CI/CD pipelines to be initiated in GitHub"
+  }
+}

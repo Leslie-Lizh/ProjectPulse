@@ -21,3 +21,19 @@ export function listAllProjects() {
 export function listUserProjects(userName) {
   return sendRequest(`${BASE_URL}/${userName}/projects`);
 }
+
+export function listAllTasks() {
+  return sendRequest(`${BASE_URL}/admin/tasks`);
+}
+
+export function editSingleTask(taskData) {
+  return sendRequest(`${BASE_URL}/admin/tasks/${taskData.task_id}`, "PATCH", taskData);
+}
+
+export function deleteSingleTask(taskId) {
+  return sendRequest(`${BASE_URL}/admin/tasks/${taskId}`, "DELETE")
+}
+
+export function createSingleTask(taskData) {
+  return sendRequest(`${BASE_URL}/admin/tasks`, "POST", taskData)
+}

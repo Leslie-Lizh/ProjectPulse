@@ -12,8 +12,9 @@ console.log(userName)
 
 // use this for comparing target timeline and current date, neglecting the time portion
 const time = new Date()
-console.log(time)
+console.log(new Date().toISOString().slice(0, 10))
 console.log(Date.parse(time))
 
 const newDate = '2024-07-13T16:00:00.000Z'
 console.log(Date.parse(newDate))
+console.log(Date.parse(time) >= Date.parse(newDate))

@@ -16,4 +16,10 @@ router.get("/admin/tasks", usersCtrl.showAllTasks)
 
 router.get("/:userName/tasks", usersCtrl.showUserTasks)
 
+router.patch("/admin/tasks/:taskId", usersCtrl.editTask)
+
+router.delete("/adim/tasks/:taskId", usersCtrl.deleteTask)
+
+router.post("/admin/tasks", usersCtrl.createTask)
+
 module.exports = router;
