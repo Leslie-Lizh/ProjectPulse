@@ -1,6 +1,6 @@
 import debug from "debug";
 import { useEffect, useState } from "react"; // eslint-disable-line no-unused-vars
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { getUser } from "./utilities/users-service";
 import AuthPage from "./pages/AuthPage";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -21,16 +21,15 @@ function App() {
 
   const [user, setUser] = useState(getUser());
 
-  // useEffect(() => {
-  //   const interValid = setInterval(() => {
-  //     const loggedIn = getUser();
-  //     if (loggedIn) {
-  //       setUser(loggedIn)
-  //     }
-  //   }, 60000);
+  // check the token maybe... every 5min?
+  useEffect(() => {
+    const interValid = setInterval(() => {
+      const loggedIn = getUser();
+      setUser(loggedIn)
+    }, 300000);
 
-  //   return () => clearInterval(interValid); 
-  // }, []);
+    return () => clearInterval(interValid); 
+  }, []);
 
   if (!user) {
     return (
@@ -45,10 +44,10 @@ function App() {
   return (
     <>
       <main className="flex">
-        <div className="w-64 fixed sidebar dark:bg-secondary-dark-bg bg-white">
+        <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white">
             <SideBar user={user} setUser={setUser}/>
         </div>
-        <div className="relative ml-56">
+        <div className="relative ml-64">
         <Routes>
           <Route path="/:dept/admin/dashboard" element={<ProtectedRoute user={user} adminComponent={AdminDashboardPage} />} />
           <Route path="/:dept/:name/dashboard" element={<ProtectedRoute user={user} userComponent={UserDashboardPage} />} />
@@ -58,6 +57,7 @@ function App() {
           <Route path="/:dept/:name/tasks" element={<ProtectedRoute user={user} userComponent={UserTaskPage} />} />
           <Route path="/:dept/admin/profile" element={<ProtectedRoute user={user} adminComponent={AdminProfilePage} />} />
           <Route path="/:dept/:name/profile" element={<ProtectedRoute user={user} userComponent={UserProfilePage} />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
         </div>
       </main>

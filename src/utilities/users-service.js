@@ -82,3 +82,8 @@ export const completeSingleTask = async (taskData, payload) => {
   log("payload: %o", payload);
   return await userAPI.completeSingleTask(taskData, payload);
 }
+
+export const updateUserPassword = async (userData, payload) => {
+  log("payload: %o", payload);
+  return await userAPI.updateUserPassword(userData, payload);
+}

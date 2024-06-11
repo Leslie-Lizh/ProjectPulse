@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const usersCtrl = require("../../controllers/api/usersController");
+const { verifyJWT } = require("../../config/verifyMiddleware")
 
 router.get("/", usersCtrl.showUsers)
 
@@ -16,12 +17,14 @@ router.get("/admin/tasks", usersCtrl.showAllTasks)
 
 router.get("/:userName/tasks", usersCtrl.showUserTasks)
 
-router.patch("/admin/tasks/:taskId", usersCtrl.editTask)
+router.patch("/admin/tasks/:taskId", verifyJWT, usersCtrl.editTask)
 
-router.delete("/admin/tasks/:taskId", usersCtrl.deleteTask)
+router.delete("/admin/tasks/:taskId", verifyJWT, usersCtrl.deleteTask)
 
-router.post("/admin/tasks", usersCtrl.createTask)
+router.post("/admin/tasks", verifyJWT, usersCtrl.createTask)
 
-router.patch("/user/tasks/:taskId", usersCtrl.completeTask)
+router.patch("/user/tasks/:taskId", verifyJWT, usersCtrl.completeTask)
+
+router.patch("/:userId/password", verifyJWT, usersCtrl.changePassword)
 
 module.exports = router;

@@ -5,18 +5,18 @@ import { Bar, Pie } from "react-chartjs-2";
 
 export default function UserDashboardPage( {user} ) {
     const [tasksList] = useAtom(tasksAtom);
-    // console.log(tasksList)
+    console.log(tasksList)
 
     const assigned = tasksList.filter((list) => list.assignment.some((data) => data.assignee === user.name))
-    console.log(assigned)
+    // console.log(assigned)
 
     return (
         <>
         <div className="m-2 ml-24 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
             {assigned.map((task) => (
-                <div key={task.project_title} >
-                <h1>{task.project_title}</h1>
-                <div className="flex flex-row gap-36 ml-24">
+                <div className="mb-8" key={task.project_title} >
+                <h1 style={{fontWeight: "bold"}}>{task.project_title}</h1>
+                <div className="flex flex-row gap-36 ml-24 mt-4">
                     <div className="w-350 h-350">
                     <Bar data={{
                     labels: task.assignment?.map((assigned) => assigned.assignee),
@@ -30,7 +30,7 @@ export default function UserDashboardPage( {user} ) {
                     }} option={{
                     title: {
                         display: true,
-                        text: 'Monthly Sales'
+                        text: 'Task KPI'
                     }
                     }}/>
                     </div>
@@ -47,7 +47,7 @@ export default function UserDashboardPage( {user} ) {
                     }} option={{
                     title: {
                         display: true,
-                        text: 'Monthly Sales'
+                        text: 'Project KPI'
                     }
                     }}/>
                     </div>

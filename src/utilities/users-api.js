@@ -45,3 +45,7 @@ export function listUserTasks(userName) {
 export function completeSingleTask(taskId, payload) {
   return sendRequest(`${BASE_URL}/user/tasks/${taskId}`, "PATCH", payload)
 }
+
+export function updateUserPassword(userId, payload) {
+  return sendRequest(`${BASE_URL}/${userId}/password/`, "PATCH", payload)
+}

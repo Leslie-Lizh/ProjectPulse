@@ -45,9 +45,9 @@ export default function UserTaskPage({ user }) {
     return (
         <>
         <div className="m-2 ml-24 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-            <h1>Welcome, {user.name}, here is a list of tasks you are involved in</h1>
-            <div>
-                <h2>Tasks you have yet complete, keep up!</h2>
+            <h1 className="text-lg">Welcome, <strong>{user.name}</strong>, here is a list of tasks you are involved in</h1>
+            <div className="mt-10">
+                <h2 className="text-lg pb-4 italic">Tasks you have yet complete, keep up!</h2>
                 <table>
                     <thead>
                         <tr>
@@ -62,14 +62,14 @@ export default function UserTaskPage({ user }) {
                     <tbody>
                         {taskIncomplete.map((task) => (
                             <tr key={task.task_title}>
-                                <td>{task.project_title}</td>
-                                <td>{task.task_title}</td>
-                                <td>{new Date(task.task_created_date).toLocaleDateString("en-SG")}</td>
-                                <td>{new Date(task.target_timeline).toLocaleDateString("en-SG")}</td>
+                                <td className="text-center">{task.project_title}</td>
+                                <td className="text-center">{task.task_title}</td>
+                                <td className="text-center">{new Date(task.task_created_date).toLocaleDateString("en-SG")}</td>
+                                <td className="text-center">{new Date(task.target_timeline).toLocaleDateString("en-SG")}</td>
                                 <td>
-                                    <div className="w-full h-full flex flex-row item-center gap-2">
-                                        <div className="h-2 w-2 rounded-full" style={{backgroundColor: task.status ? "green" : Date.parse(new Date()) <= Date.parse(task.target_timeline) ? "yellow" : "red"}}></div>
-                                        {task.status ? (<span>complete</span>) : Date.parse(new Date()) <= Date.parse(task.target_timeline) ? (<span>in-progress</span>) : (<span>overdue</span>)}
+                                    <div className="w-full h-full flex flex-row gap-2">
+                                        <div className="h-2 w-2 rounded-full mt-2.5" style={{backgroundColor: task.status ? "green" : Date.parse(new Date()) <= Date.parse(task.target_timeline) ? "yellow" : "red"}}></div>
+                                        {task.status ? (<span>complete</span>) : Date.parse(new Date()) <= Date.parse(task.target_timeline) ? (<span >in-progress</span>) : (<span>overdue</span>)}
                                     </div>
                                 </td>
                                 <td><button className="complete-btn" onClick={() => handleComplete(task.task_id)}>Mark Done</button></td>
@@ -78,8 +78,8 @@ export default function UserTaskPage({ user }) {
                     </tbody>
                 </table>
             </div>
-            <div>
-                <h2>Tasks you have already complete, congratz!</h2>
+            <div className="mt-24">
+                <h2 className="text-lg pb-4 italic">Tasks you have already complete, congratz!</h2>
                 {taskComplete.length > 0 && (
                 <table>
                     <thead>
@@ -95,17 +95,17 @@ export default function UserTaskPage({ user }) {
                     <tbody>
                         {taskComplete.map((task) => (
                             <tr key={task.task_title}>
-                                <td>{task.project_title}</td>
-                                <td>{task.task_title}</td>
-                                <td>{new Date(task.task_created_date).toLocaleDateString("en-SG")}</td>
-                                <td>{new Date(task.target_timeline).toLocaleDateString("en-SG")}</td>
+                                <td className="text-center">{task.project_title}</td>
+                                <td className="text-center">{task.task_title}</td>
+                                <td className="text-center">{new Date(task.task_created_date).toLocaleDateString("en-SG")}</td>
+                                <td className="text-center">{new Date(task.target_timeline).toLocaleDateString("en-SG")}</td>
                                 <td>
-                                    <div className="w-full h-full flex flex-row item-center gap-2">
-                                        <div className="h-2 w-2 rounded-full" style={{backgroundColor: task.status ? "green" : Date.parse(new Date()) <= Date.parse(task.target_timeline) ? "yellow" : "red"}}></div>
+                                    <div className="w-full h-full flex flex-row gap-2">
+                                        <div className="h-2 w-2 rounded-full mt-2.5" style={{backgroundColor: task.status ? "green" : Date.parse(new Date()) <= Date.parse(task.target_timeline) ? "yellow" : "red"}}></div>
                                         {task.status ? (<span>complete</span>) : Date.parse(new Date()) <= Date.parse(task.target_timeline) ? (<span>in-progress</span>) : (<span>overdue</span>)}
                                     </div>
                                 </td>
-                                <td>{new Date(task.task_completed_date).toLocaleDateString("en-SG")}</td>
+                                <td className="text-center">{new Date(task.task_completed_date).toLocaleDateString("en-SG")}</td>
                             </tr>
                         ))}
                     </tbody>

@@ -143,13 +143,13 @@ export default function AdminTaskPage( {user} ) {
     return (
         <>
         <div className="m-2 ml-24 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-            <h1>Welcome, {user.name}, here is a list of tasks created</h1>
-            <div className="flex flex-row gap-10 mb-10 mt-6" style={{ background:"#cacaca", borderRadius:"15px", width:"50%", paddingTop:"10px", paddingBottom:"10px", translate:"10px"}} >
+            <h1 className="text-lg">Welcome, <strong>{user.name}</strong>, here is a list of tasks created</h1>
+            <div className="flex flex-row gap-10 mb-10 mt-6" style={{ background:"#cacaca", borderRadius:"15px", width:"30%", paddingTop:"10px", paddingBottom:"10px", translate:"10px"}} >
                 <div>
-                    <input type="text" placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
+                    <input className="rounded-l-lg" type="text" placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
                 </div>
                 <div>
-                    <button className="rounded-full bg-white" onClick={handleSearch}>Search</button>
+                    <button className="rounded-full text-white bg-rose-500 w-16" onClick={handleSearch}>Search</button>
                 </div>
             </div>
             <div>
@@ -170,18 +170,18 @@ export default function AdminTaskPage( {user} ) {
                     <tbody>
                         {filteredTask.map((task) => (
                             <tr key={task.task_title}>
-                                <td>{task.project_title}</td>
+                                <td className="text-center">{task.project_title}</td>
                                 {displayEditForm === true && taskData.task_id === task.task_id? (<td><input className="w-full input-box" type="text" name="task_title" value={taskData.task_title} onChange={handleEditChange}/></td>) : (<td>{task.task_title}</td>)}
-                                <td>{new Date(task.task_created_date).toLocaleDateString("en-SG")}</td>
-                                <td>{new Date(task.target_timeline).toLocaleDateString("en-SG")}</td>
-                                <td>{task.assignee}</td>
+                                <td className="text-center">{new Date(task.task_created_date).toLocaleDateString("en-SG")}</td>
+                                <td className="text-center">{new Date(task.target_timeline).toLocaleDateString("en-SG")}</td>
+                                <td className="text-center">{task.assignee}</td>
                                 <td>
-                                    <div className="w-full h-full flex flex-row item-center gap-2">
-                                        <div className="h-2 w-2 rounded-full" style={{backgroundColor: task.status ? "green" : Date.parse(new Date()) <= Date.parse(task.target_timeline) ? "yellow" : "red"}}></div>
+                                    <div className="w-full h-full flex flex-row gap-2">
+                                        <div className="h-2 w-2 rounded-full mt-2.5" style={{backgroundColor: task.status ? "green" : Date.parse(new Date()) <= Date.parse(task.target_timeline) ? "yellow" : "red"}}></div>
                                         {task.status ? (<span>complete</span>) : Date.parse(new Date()) <= Date.parse(task.target_timeline) ? (<span>in-progress</span>) : (<span>overdue</span>)}
                                     </div>
                                 </td>
-                                {task.task_completed_date ? (<td>{new Date(task.task_completed_date).toLocaleDateString("en-SG")}</td>) : (<td>null</td>)}
+                                {task.task_completed_date ? (<td className="text-center">{new Date(task.task_completed_date).toLocaleDateString("en-SG")}</td>) : (<td className="text-center">null</td>)}
                                 <td><button className="edit-btn" onClick={() => handleEdit(task)}>🖊</button></td>
                                 {displayEditForm === true && taskData.task_id === task.task_id ? (<td><button className="save-btn" style={{ backgroundColor: "#a3e635" }} onClick={handleEditSave}>✔</button></td>) : (<td><button className="delete-btn" onClick={() => handleDelete(task.task_id)}>❌</button></td>)}
                             </tr>
@@ -193,7 +193,7 @@ export default function AdminTaskPage( {user} ) {
                 <button className="rounded-full bg-indigo-400 h-8 w-8 text-white" onClick={() => setDisplayNewForm(!displayNewForm)}>+</button>
             </div>
             {displayNewForm && (
-            <div className="form-container" style={{ maxWidth: "400px" }}>
+            <div className="form-container" style={{ maxWidth: "400px", marginTop: "20px" }}>
                 <form autoComplete="off" onSubmit={handleNewSubmit}>
                     <div>
                     <label htmlFor="project">Select project:</label>

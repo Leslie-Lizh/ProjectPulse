@@ -68,9 +68,9 @@ export default function AdminDashboardPage() {
         <>
         <div className="m-2 ml-24 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
             {allTasks.map((task) => (
-                <div key={task.project_title} >
-                <h1>{task.project_title}</h1>
-                <div className="flex flex-row gap-36 ml-24">
+                <div className="mb-8" key={task.project_title} >
+                <h1 style={{fontWeight: "bold"}}>{task.project_title}</h1>
+                <div className="flex flex-row gap-36 ml-24 mt-4">
                     <div className="w-350 h-350">
                     <Bar data={{
                     labels: task.assignment?.map((assigned) => assigned.assignee),
@@ -84,7 +84,7 @@ export default function AdminDashboardPage() {
                     }} option={{
                     title: {
                         display: true,
-                        text: 'Monthly Sales'
+                        text: 'Task KPI'
                     }
                     }}/>
                     </div>
@@ -101,7 +101,7 @@ export default function AdminDashboardPage() {
                     }} option={{
                     title: {
                         display: true,
-                        text: 'Monthly Sales'
+                        text: 'Project KPI'
                     }
                     }}/>
                     </div>

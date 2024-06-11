@@ -32,7 +32,7 @@ async function createUser(req, res) {
         const result = await client.query(queryText, [name, dept, role, email, hashedPassword, is_admin]);
         const user = result.rows[0];
         delete user.password; // remove password before jwt
-        const token = createJWT(user);
+        const token = createJWT(user); // need this when skipping login after signup
         res.status(201).json(token);
     } catch (err) {
         debug(err);
@@ -128,6 +128,11 @@ async function showUserTasks(req, res) {
 }
 
 async function editTask(req, res) {
+    const validUser = res.locals.user;
+    if (!validUser) {
+        return res.status(401).json({ msg: 'Unauthorized' });
+    }
+
     const { taskId } = req.params;
     debug(taskId);
     const { task_title } = req.body;
@@ -148,6 +153,11 @@ async function editTask(req, res) {
 }
 
 async function deleteTask(req, res) {
+    const validUser = res.locals.user;
+    if (!validUser) {
+        return res.status(401).json({ msg: 'Unauthorized' });
+    }
+
     const { taskId } = req.params;
     console.log(taskId);
     const client = await pool.connect();
@@ -164,6 +174,11 @@ async function deleteTask(req, res) {
 }
 
 async function createTask(req, res) {
+    const validUser = res.locals.user;
+    if (!validUser) {
+        return res.status(401).json({ msg: 'Unauthorized' });
+    }
+
     const { project_title, task_title, target_timeline, task_created_date, assignee, status } = req.body;
     const client = await pool.connect();
     try {
@@ -182,6 +197,11 @@ async function createTask(req, res) {
 }
 
 async function completeTask(req, res) {
+    const validUser = res.locals.user;
+    if (!validUser) {
+        return res.status(401).json({ msg: 'Unauthorized' });
+    }
+
     const { taskId } = req.params;
     const { status, task_completed_date } = req.body;
     const client = await pool.connect();
@@ -198,6 +218,30 @@ async function completeTask(req, res) {
     }
 }
 
+async function changePassword(req, res) {
+    const validUser = res.locals.user;
+    if (!validUser) {
+        return res.status(401).json({ msg: 'Unauthorized' });
+    }
+    
+    const { userId } = req.params;
+    const { password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+    const client = await pool.connect();
+    try {
+        const result = await client.query("UPDATE users SET password = $1 WHERE id = $2 RETURNING *;", [hashedPassword, userId])
+        const newInfo = result.rows[0];
+        debug(newInfo);
+        delete newInfo.password;
+        res.json({ updated: newInfo })
+    } catch (err) {
+        debug(err);
+        res.status(500).json({ msg: 'Error changing password, database query failed' })
+    } finally {
+        if (client) client.release();
+    }
+}
+
 module.exports = {
     showUsers,
     createUser,
@@ -209,5 +253,6 @@ module.exports = {
     editTask,
     deleteTask,
     createTask,
-    completeTask
+    completeTask,
+    changePassword
 }
