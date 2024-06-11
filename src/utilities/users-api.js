@@ -37,3 +37,11 @@ export function deleteSingleTask(taskId) {
 export function createSingleTask(taskData) {
   return sendRequest(`${BASE_URL}/admin/tasks`, "POST", taskData)
 }
+
+export function listUserTasks(userName) {
+  return sendRequest(`${BASE_URL}/${userName}/tasks`)
+}
+
+export function completeSingleTask(taskId, payload) {
+  return sendRequest(`${BASE_URL}/user/tasks/${taskId}`, "PATCH", payload)
+}

@@ -6,11 +6,15 @@ function UserProjectPage({ user }) {
 
   useEffect(() => {
     const fetchProjects = async () => {
-      const userName = user.name;
-      const encodedUserName = encodeURIComponent(userName);
-      const data = await listUserProjects(encodedUserName); 
+        try {
+            const userName = user.name;
+            const encodedUserName = encodeURIComponent(userName);
+            const data = await listUserProjects(encodedUserName); 
 
-      setProjects(data);
+            setProjects(data);
+        } catch (error) {
+            console.log("Error fetching user projects: ", error);
+        }
     };
 
     fetchProjects();
@@ -20,7 +24,7 @@ function UserProjectPage({ user }) {
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
       <h1>Projects that you are a member</h1>
       {projects.map((project) => (
-        <div key={project.project_title}>
+        <div key={project.project_title} className='mt-20 mb-20'>
           <h2>{project.project_title}</h2>
           <p>{project.description}</p>
           <p><strong>Client:</strong> {project.client}</p>

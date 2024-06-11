@@ -39,7 +39,8 @@ form:invalid button[type="submit"] {
 .edit-btn,
 .delete-btn,
 .save-btn,
-.create-btn {
+.create-btn,
+.complete-btn {
   margin: 1vmin;
   padding: 0.6vmin 0.8vmin;
   color: #ffffff;

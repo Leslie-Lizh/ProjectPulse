@@ -8,6 +8,7 @@ function AdminProjectPage() {
 
   useEffect(() => {
     const fetchProjects = async () => {
+        try {
       const data = await listAllProjects(); 
 
       const groupedData = data.reduce((acc, project) => {
@@ -30,6 +31,10 @@ function AdminProjectPage() {
       }, {});
 
       setProjects(Object.values(groupedData));
+      
+        } catch (error) {
+            console.log("Error fetching projects: ", error)
+        }
     };
 
     fetchProjects();

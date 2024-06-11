@@ -100,7 +100,7 @@ async function showUserProjects(req, res) {
 async function showAllTasks(req, res) {
     const client = await pool.connect();
     try {
-        const result = await client.query("SELECT t.id AS task_id, p.id AS project_id, project_title, task_title, task_created_date, target_timeline, assignee, status FROM tasks t JOIN projects p ON t.project_id = p.id; ")
+        const result = await client.query("SELECT t.id AS task_id, p.id AS project_id, project_title, task_title, task_created_date, target_timeline, assignee, status, task_completed_date FROM tasks t JOIN projects p ON t.project_id = p.id; ")
         debug(result.rows);
         res.json(result.rows)
     } catch(err) {
@@ -116,7 +116,7 @@ async function showUserTasks(req, res) {
     debug(userName);
     const client = await pool.connect();
     try {
-        const result = await client.query("SELECT t.id AS task_id, p.id AS project_id, project_title, task_title, task_created_date, target_timeline, assignee, status FROM tasks t JOIN projects p ON t.project_id = p.id WHERE assignee = $1; ", [userName])
+        const result = await client.query("SELECT t.id AS task_id, p.id AS project_id, project_title, task_title, task_created_date, target_timeline, assignee, status, task_completed_date FROM tasks t JOIN projects p ON t.project_id = p.id WHERE assignee = $1; ", [userName])
         debug(result.rows);
         res.json(result.rows)
     } catch(err) {
@@ -136,7 +136,7 @@ async function editTask(req, res) {
     try {
         const result = await client.query("UPDATE tasks SET task_title = $1 WHERE id = $2 RETURNING *", [task_title, taskId])
         debug("result", result.rows);
-        const finalResult = await client.query("SELECT t.id AS task_id, p.id AS project_id, project_title, task_title, task_created_date, target_timeline, assignee, status FROM tasks t JOIN projects p ON t.project_id = p.id WHERE t.id = $1", [taskId])
+        const finalResult = await client.query("SELECT t.id AS task_id, p.id AS project_id, project_title, task_title, task_created_date, target_timeline, assignee, status, task_completed_date FROM tasks t JOIN projects p ON t.project_id = p.id WHERE t.id = $1", [taskId])
         debug("finalResult", finalResult.rows);
         res.json(finalResult.rows[0])
     } catch(err) {
@@ -149,7 +149,7 @@ async function editTask(req, res) {
 
 async function deleteTask(req, res) {
     const { taskId } = req.params;
-    debug(taskId);
+    console.log(taskId);
     const client = await pool.connect();
     try {
         const result = await client.query("DELETE FROM tasks WHERE id = $1 RETURNING *;", [taskId])
@@ -171,11 +171,28 @@ async function createTask(req, res) {
         const { id } = result.rows[0];
         const newTask = await client.query("INSERT INTO tasks (task_title, target_timeline, task_created_date, assignee, status, project_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;", [task_title, target_timeline, task_created_date, assignee, status, id])
         debug(newTask.rows)
-        const addedTask = await client.query("SELECT t.id AS task_id, p.id AS project_id, project_title, task_title, task_created_date, target_timeline, assignee, status FROM tasks t JOIN projects p ON t.project_id = p.id WHERE task_title = $1 AND assignee = $2", [task_title, assignee])
+        const addedTask = await client.query("SELECT t.id AS task_id, p.id AS project_id, project_title, task_title, task_created_date, target_timeline, assignee, status, task_completed_date FROM tasks t JOIN projects p ON t.project_id = p.id WHERE task_title = $1 AND assignee = $2", [task_title, assignee])
         res.json(addedTask.rows[0])
     } catch(err) {
         debug(err);
         res.status(500).json({ msg: 'Error creating task, database query failed' })
+    } finally {
+        if (client) client.release();
+    }
+}
+
+async function completeTask(req, res) {
+    const { taskId } = req.params;
+    const { status, task_completed_date } = req.body;
+    const client = await pool.connect();
+    try {
+        const result = await client.query("UPDATE tasks SET status = $1, task_completed_date = $2 WHERE id = $3 RETURNING *", [status, task_completed_date, taskId])
+        debug(result.rows);
+        const completedTask = await client.query("SELECT t.id AS task_id, p.id AS project_id, project_title, task_title, task_created_date, target_timeline, assignee, status, task_completed_date FROM tasks t JOIN projects p ON t.project_id = p.id WHERE t.id = $1", [taskId])
+        res.json(completedTask.rows[0])
+    } catch (err) {
+        debug(err);
+        res.status(500).json({ msg: 'Error completing task, database query failed' })
     } finally {
         if (client) client.release();
     }
@@ -192,4 +209,5 @@ module.exports = {
     editTask,
     deleteTask,
     createTask,
+    completeTask
 }

@@ -18,8 +18,10 @@ router.get("/:userName/tasks", usersCtrl.showUserTasks)
 
 router.patch("/admin/tasks/:taskId", usersCtrl.editTask)
 
-router.delete("/adim/tasks/:taskId", usersCtrl.deleteTask)
+router.delete("/admin/tasks/:taskId", usersCtrl.deleteTask)
 
 router.post("/admin/tasks", usersCtrl.createTask)
+
+router.patch("/user/tasks/:taskId", usersCtrl.completeTask)
 
 module.exports = router;

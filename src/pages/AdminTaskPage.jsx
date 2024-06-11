@@ -30,7 +30,7 @@ export default function AdminTaskPage( {user} ) {
     
     const selectedProjectMembers = projectsList.find((project) => project.project_title === selectedProject)?.members || []
 
-    // console.log(projectsList)
+    console.log(projectsList)
     
     useEffect(() => {
         const fetchTasks = async () => {
@@ -162,6 +162,7 @@ export default function AdminTaskPage( {user} ) {
                             <th>Target Timeline</th>
                             <th>Assigned To</th>
                             <th>Status</th>
+                            <th>Date Completed</th>
                             <th>Edit</th>
                             <th>Action</th>
                         </tr>
@@ -180,8 +181,9 @@ export default function AdminTaskPage( {user} ) {
                                         {task.status ? (<span>complete</span>) : Date.parse(new Date()) <= Date.parse(task.target_timeline) ? (<span>in-progress</span>) : (<span>overdue</span>)}
                                     </div>
                                 </td>
+                                {task.task_completed_date ? (<td>{new Date(task.task_completed_date).toLocaleDateString("en-SG")}</td>) : (<td>null</td>)}
                                 <td><button className="edit-btn" onClick={() => handleEdit(task)}>🖊</button></td>
-                                {displayEditForm === true && taskData.task_id === task.task_id ? (<td><button className="save-btn" onClick={handleEditSave}>✔</button></td>) : (<td><button className="delete-btn" onClick={() => handleDelete(task.task_id)}>❌</button></td>)}
+                                {displayEditForm === true && taskData.task_id === task.task_id ? (<td><button className="save-btn" style={{ backgroundColor: "#a3e635" }} onClick={handleEditSave}>✔</button></td>) : (<td><button className="delete-btn" onClick={() => handleDelete(task.task_id)}>❌</button></td>)}
                             </tr>
                         ))}
                     </tbody>

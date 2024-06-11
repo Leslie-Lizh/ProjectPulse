@@ -72,3 +72,13 @@ export const deleteSingleTask = async (taskId) => {
 export const createSingleTask = async (taskData) => {
   return await userAPI.createSingleTask(taskData);
 }
+
+export const listUserTasks = async (userData) => {
+  log("userName: %o", userData);
+  return await userAPI.listUserTasks(userData);
+}
+
+export const completeSingleTask = async (taskData, payload) => {
+  log("payload: %o", payload);
+  return await userAPI.completeSingleTask(taskData, payload);
+}
