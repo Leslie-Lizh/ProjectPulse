@@ -1,6 +1,6 @@
 import debug from "debug";
 import { useEffect, useState } from "react"; // eslint-disable-line no-unused-vars
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom"; // eslint-disable-line no-unused-vars
 import { getUser } from "./utilities/users-service";
 import AuthPage from "./pages/AuthPage";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -57,7 +57,7 @@ function App() {
           <Route path="/:dept/:name/tasks" element={<ProtectedRoute user={user} userComponent={UserTaskPage} />} />
           <Route path="/:dept/admin/profile" element={<ProtectedRoute user={user} adminComponent={AdminProfilePage} />} />
           <Route path="/:dept/:name/profile" element={<ProtectedRoute user={user} userComponent={UserProfilePage} />} />
-          <Route path="*" element={<Navigate to="/" />} />
+          {/* <Route path="*" element={<Navigate to="/" />} /> */}
         </Routes>
         </div>
       </main>

@@ -1,0 +1,5 @@
+insert into "users" ("dept", "email", "id", "is_admin", "name", "password", "role") values ('R&D', 'leslie@gmail.com', 6, true, 'Leslie', '$2b$06$qNh87Afi5o8omFwkKl6bcOpAlC343mT/2qEwy9bpZ4mcLlWI1H7ny', 'DevOps Manager');
+insert into "users" ("dept", "email", "id", "is_admin", "name", "password", "role") values ('R&D', 'lizz@gmail.com', 7, false, 'Lizz', '$2b$06$9i8cVO3QQFu1X5cpZ1o1reMOc4PVe4wO.DqYperZc0HLVzPvn90ly', 'Software Engineer');
+insert into "users" ("dept", "email", "id", "is_admin", "name", "password", "role") values ('R&D', 'melvin@gmail.com', 8, false, 'Melvin', '$2b$06$lcaBBJz.Eh2t8DNmX2x9eOKBCXD.d8OTAUtrEGMwziUqIe/Ecq7NG', 'System Architect');
+insert into "users" ("dept", "email", "id", "is_admin", "name", "password", "role") values ('Business Solutions', 'lerfli@hotmail.com', 9, false, 'Lerfli', '$2b$06$3Z0zcVdC4/b5U2ckTTC.fOQNMeSj0b4YzW2BeWj3rJl100M33XmU.', 'Solution Engineer');
+insert into "users" ("dept", "email", "id", "is_admin", "name", "password", "role") values ('R&D', 'lee@gmail.com', 5, false, 'Lee', '$2b$06$27sffRC.sTMYMoe1s6avx.oRQwcImxP0Lo1XfTX1Yo6PF2Z4Ao4zy', 'DevOps');
