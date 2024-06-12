@@ -132,6 +132,9 @@ async function editTask(req, res) {
     if (!validUser) {
         return res.status(401).json({ msg: 'Unauthorized' });
     }
+    if (!validUser.is_admin) {
+        return res.status(401).json({ msg: 'User does not have permission' });
+    }
 
     const { taskId } = req.params;
     debug(taskId);
@@ -157,6 +160,9 @@ async function deleteTask(req, res) {
     if (!validUser) {
         return res.status(401).json({ msg: 'Unauthorized' });
     }
+    if (!validUser.is_admin) {
+        return res.status(401).json({ msg: 'User does not have permission' });
+    }
 
     const { taskId } = req.params;
     console.log(taskId);
@@ -177,6 +183,9 @@ async function createTask(req, res) {
     const validUser = res.locals.user;
     if (!validUser) {
         return res.status(401).json({ msg: 'Unauthorized' });
+    }
+    if (!validUser.is_admin) {
+        return res.status(401).json({ msg: 'User does not have permission' });
     }
 
     const { project_title, task_title, target_timeline, task_created_date, assignee, status } = req.body;
@@ -223,7 +232,7 @@ async function changePassword(req, res) {
     if (!validUser) {
         return res.status(401).json({ msg: 'Unauthorized' });
     }
-    
+
     const { userId } = req.params;
     const { password } = req.body;
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
